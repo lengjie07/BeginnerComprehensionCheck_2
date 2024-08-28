@@ -14,7 +14,7 @@ public class StudentScores {
   // 1. 学生を追加
   public void addStudent() {
     System.out.print("追加する学生の名前を入力してください: ");
-    String nameToRegister = scanner.next();
+    String nameToRegister = scanner.nextLine();
 
     System.out.print(nameToRegister + "の点数を入力してください: ");
     // 点数が0以上100以下の整数以外のときにエラーを返す
@@ -29,36 +29,44 @@ public class StudentScores {
       System.out.println("エラー: 点数は0～100の整数で入力してください。");
       scanner.next();
     }
+    scanner.nextLine(); // バッファをクリア
   }
 
   // 2. 学生を削除
   public void deleteStudent() {
+    // リストが空だったらエラーを返す
+    if (studentList.isEmpty()) {
+      System.out.println("エラー: 登録されている学生がいません。");
+      return;
+    }
+
     System.out.print("削除する学生の名前を入力してください: ");
-    String nameToDelete = scanner.next();
+    String nameToDelete = scanner.nextLine();
 
     Iterator<Student> iterator = studentList.iterator();
-
-    // 該当する学生がいるかチェック
-    boolean found = false;
 
     while (iterator.hasNext()) {
       Student student = iterator.next();
       if (student.getName().equals(nameToDelete)) {
         iterator.remove();
-        found = true;
-        break;
+        return;
+      } else {
+        System.out.println("エラー:該当する学生がいません。");
       }
-    }
-    if (!found) {
-      System.out.println("エラー:該当する学生がいません。");
     }
   }
 
 
   // 3. 点数を更新
   public void updateScore() {
+    // リストが空だったらエラーを返す
+    if (studentList.isEmpty()) {
+      System.out.println("エラー: 登録されている学生がいません。");
+      return;
+    }
+
     System.out.print("更新する学生の名前を入力してください: ");
-    String nameToUpdate = scanner.next();
+    String nameToUpdate = scanner.nextLine();
 
     // 該当する学生がいるかチェック
     boolean found = false;
@@ -95,6 +103,7 @@ public class StudentScores {
       System.out.println("エラー: 点数は0～100の整数で入力してください。");
       scanner.next();
     }
+    scanner.nextLine();// バッファをクリア
   }
 
   // 4. 平均点を計算
